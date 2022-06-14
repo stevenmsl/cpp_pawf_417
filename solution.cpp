@@ -16,24 +16,33 @@ using namespace std;
 /*takeaways
   - Start from the borders, which are next to the Pacific or Atlantic
     waters, and record which nodes can be reached on two different set
+
   - Intersect the set. The intersection represents the nodes that
     can be reached by both Pacific and Atlantic waters
-  - one key point to remember is that instead of going from a node to
-    see if we can reach the water from that node, we do it the opposite
-    and deduce the path from the water back to the node. So the
+
+  - one key point to remember is that instead of starting from any node to
+    see if we can reach both waters from that node, we do it the opposite
+    and construct the path from the water to the node. So the
     criteria are different: you can think of this as water is flowing
     form the lower to a higher place
+
   - why we are doing this? So we can reduce the time complexity to O(mn)
 
+  - also we are reverting the paths so the criteria of being able to
+    go from one node to another is the opposite of the original.
 */
 
 vector<pair<int, int>> Solution::pa(vector<vector<int>> &matrix)
 {
   int n = matrix.size(), m = matrix[0].size();
   auto result = vector<pair<int, int>>();
+  /* two separate sets of nodes that can be reached
+     from the borders
+  */
   auto pa = vector<vector<int>>(n, vector<int>(m));
   auto at = vector<vector<int>>(n, vector<int>(m));
 
+  /* visit from the borders */
   for (auto i = 0; i < m; i++)
   {
     /* top row; adjacent to the Pacific */
